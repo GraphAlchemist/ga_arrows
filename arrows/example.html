@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="lib/d3.v3.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="graph-diagram.js"></script>
+  <link rel="stylesheet" href="style/graph-diagram.css" type="text/css">
+  <link rel="stylesheet" href="style/graph-style-bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="lib/bootstrap.css" type="text/css">
+  <title>Graph Diagram Example</title>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Graph Diagram Example</h1>
+
+  <p>This is a simple example of including a graph diagram in an HTML page.
+    View the <a href="javascript:location='view-source:'+location">source of this page</a> to see the moving parts.</p>
+
+  <figure class="graph-diagram">
+    <ul class="graph-diagram-markup">
+      <li class="node" data-node-id="0" data-x="0" data-y="0">
+        <span class="caption">A</span>
+        <dl class="properties">
+          <dt>key</dt>
+          <dd>value</dd>
+        </dl>
+      </li>
+      <li class="node" data-node-id="1" data-x="-50" data-y="85">
+        <span class="caption">B</span>
+      </li>
+      <li class="node" data-node-id="2" data-x="50" data-y="85">
+        <span class="caption">C</span>
+      </li>
+      <li class="relationship" data-from="0" data-to="1">
+        <span class="type">R</span>
+      </li>
+      <li class="relationship" data-from="0" data-to="2">
+        <span class="type">R</span>
+      </li>
+      <li class="relationship" data-from="1" data-to="2">
+        <span class="type">R</span>
+        <dl class="properties">
+          <dt>key</dt>
+          <dd>value</dd>
+        </dl>
+      </li>
+    </ul>
+  </figure>
+
+  <p>The approach uses SVG replacement. You write HTML, and the library replaces it with SVG. The important steps are:</p>
+
+  <ul>
+    <li>Reference the <a href="graph-diagram.js">javascript</a> and its corresponding <a href="style/graph-editor.css">CSS</a>.</li>
+    <li>Write a <code>&lt;figure&gt;</code> tag, containing HTML markup that defines the graph.</li>
+    <li>Later on, include a tiny bit of javascript to call rendering library at the right point of the page lifecycle
+      (move this to document.ready block if you do that sort of thing)</li>
+  </ul>
+
+  <p>The library will insert SVG inside the <code>&lt;figure&gt;</code> element, and the CSS will hide the markup you wrote.
+    You'll see a picture of the graph, rendered as SVG.</p>
+</div>
+
+<script type="text/javascript">
+  d3.selectAll( "figure.graph-diagram" )
+          .call( gd.figure() );
+</script>
+
+</body>
+</html>

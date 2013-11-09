@@ -1,34 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script type="text/javascript" src="lib/d3.v3.js" charset="UTF-8"></script>
-  <script type="text/javascript" src="graph-diagram.js"></script>
-  <link rel="stylesheet" href="lib/bootstrap.css" type="text/css">
-  <link rel="stylesheet" href="style/graph-diagram.css" type="text/css">
-  <link rel="stylesheet" class="graph-style" href="style/graph-style-chunky.css" type="text/css">
-  <link rel="stylesheet" href="style/graph-editor.css" type="text/css">
-  <script type="text/javascript" src="graph-editor.js"></script>
-  <title>Arrow Tool</title>
+{% extends "layout.html" %}
+  
+  {% block extracss %}
+  <link rel="stylesheet" href="{{url_for('ga_arrows.static', filename='css/graph-diagram.css')}}" type="text/css">
+  <link rel="stylesheet" class="graph-style" href= "{{url_for('ga_arrows.static', filename='css/graph-style-chunky.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{url_for('ga_arrows.static', filename='css/graph-editor.css')}}" type="text/css">
+  {% endblock extracss %}
 
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push( ['_setAccount', 'UA-9292365-1'] );
-    _gaq.push( ['_trackPageview'] );
-
-    (function ()
-    {
-      var ga = document.createElement( 'script' );
-      ga.type = 'text/javascript';
-      ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName( 'script' )[0];
-      s.parentNode.insertBefore( ga, s );
-    })();
-
-  </script>
-</head>
-<body>
+{% block body %}
 
 <div class="tools form-inline well">
   <button class="btn" id="add_node_button"><i class="icon-plus"></i> Node</button>
@@ -129,8 +107,14 @@
   </div>
 </div>
 
-<div id="canvas"></div>
+<div id="canvas">
+</div>
 
 
-</body>
-</html>
+{% block extrajs %}
+  <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/d3.v3.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-diagram.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-editor.js')}}"></script>
+{% endblock extrajs %}
+
+{% endblock body %}

@@ -18,92 +18,111 @@
 
 <!--<input id="node_name_editor" class="editor-field">-->
 
-<div class="modal hide export-markup">
-  <div class="modal-header">
-    <h3>Edit/Export markup</h3>
-  </div>
-  <div class="modal-body">
-    <textarea class="code">Some text</textarea>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="save_markup">Save</a>
-  </div>
-</div>
-<div class="modal hide choose-style">
-  <div class="modal-header">
-    <h3>Choose Style</h3>
-  </div>
-  <div class="modal-body">
-    <label class="radio">
-      <input type="radio" name="styleChoice" value="graph-style-chunky.css" checked>
-      Chunky
-    </label>
-    <label class="radio">
-      <input type="radio" name="styleChoice" value="graph-style-bootstrap.css">
-      Bootstrap
-    </label>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="saveStyle">Save</a>
-  </div>
-</div>
-<div class="modal hide pop-up-editor node" tabindex="-1">
-  <div class="modal-header">
-    <h3>Edit Node</h3>
-  </div>
-  <div class="top-right-btn-bar">
-    <button class="btn btn-danger" id="edit_node_delete">Delete</button>
-  </div>
-  <div class="modal-body">
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="node_caption">Caption</label>
-        <div class="controls">
-          <input id="node_caption" type="text" value="A">
-        </div>
+<div class="modal export-markup">
+  <div class="modal-dialog">
+    <div class="modal-content">  
+      <div class="modal-header">
+        <h3>Edit/Export markup</h3>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="node_properties">Properties</label>
-        <div class="controls">
-          <textarea id="node_properties" rows="6"></textarea>
-        </div>
+      <div class="modal-body">
+        <textarea class="code">Some text</textarea>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn cancel">Cancel</a>
+        <a href="#" class="btn btn-primary" id="save_markup">Save</a>
       </div>
     </div>
   </div>
-  <div class="modal-footer">
-    <a href="#" class="btn cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="edit_node_save">Save</a>
-  </div>
 </div>
-<div class="modal hide pop-up-editor relationship" tabindex="-1">
-  <div class="modal-header">
-    <h3>Edit Relationship</h3>
-  </div>
-  <div class="top-right-btn-bar">
-    <button class="btn" id="edit_relationship_reverse">Reverse</button>
-    <button class="btn btn-danger" id="edit_relationship_delete">Delete</button>
-  </div>
-  <div class="modal-body">
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="relationship_type">Type</label>
-        <div class="controls">
-          <input id="relationship_type" type="text" value="R">
-        </div>
+
+<div class="modal choose-style">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Choose Style</h3>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="relationship_properties">Properties</label>
-        <div class="controls">
-          <textarea id="relationship_properties" rows="6"></textarea>
-        </div>
+      <div class="modal-body">
+        <label class="radio">
+          <input type="radio" name="styleChoice" value="graph-style-chunky.css" checked>
+          Chunky
+        </label>
+        <label class="radio">
+          <input type="radio" name="styleChoice" value="graph-style-bootstrap.css">
+          Bootstrap
+        </label>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn cancel">Cancel</a>
+        <a href="#" class="btn btn-primary" id="saveStyle">Save</a>
       </div>
     </div>
   </div>
-  <div class="modal-footer">
-    <a href="#" class="btn cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="edit_relationship_save">Save</a>
+</div>
+
+<div class="modal pop-up-editor node" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Node</h3>
+      </div>
+      <div class="top-right-btn-bar">
+        <button class="btn btn-danger" id="edit_node_delete">Delete</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="node_caption">Caption</label>
+            <div class="controls">
+              <input id="node_caption" type="text" value="A">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="node_properties">Properties</label>
+            <div class="controls">
+              <textarea id="node_properties" rows="6"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn cancel">Cancel</a>
+        <a href="#" class="btn btn-primary" id="edit_node_save">Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal pop-up-editor relationship" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Relationship</h3>
+      </div>
+      <div class="top-right-btn-bar">
+        <button class="btn" id="edit_relationship_reverse">Reverse</button>
+        <button class="btn btn-danger" id="edit_relationship_delete">Delete</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="relationship_type">Type</label>
+            <div class="controls">
+              <input id="relationship_type" type="text" value="R">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="relationship_properties">Properties</label>
+            <div class="controls">
+              <textarea id="relationship_properties" rows="6"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn cancel">Cancel</a>
+        <a href="#" class="btn btn-primary" id="edit_relationship_save">Save</a>
+      </div>
+    </div>
   </div>
 </div>
 

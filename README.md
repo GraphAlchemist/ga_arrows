@@ -27,6 +27,11 @@ the reason we are developing a "blueprint" rather than a flask "app" is so that 
 to other flask apps we might have.
 
 ####Some thoughts####
+1. All of the orignal arrows code was first commited by itelf
+1. The second commit is getting flask installed
+1. The third commit is getting arrows shoved into flask
+
+* There are some differences between the version of arrows at http://www.apcjones.com/arrows/#, and the github code https://github.com/apcj/arrows.
 
 1. All of the orignal arrows code was originally commited by itelf  
 2. The second commit is getting flask installed 

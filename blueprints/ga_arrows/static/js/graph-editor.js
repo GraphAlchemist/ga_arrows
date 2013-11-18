@@ -193,8 +193,7 @@ window.onload = function()
     function editNode()
     {
         var editor = d3.select(".pop-up-editor.node");
-        appendModalBackdrop();
-        editor.classed( "hide", false );
+        showModal(".pop-up-editor.node");
 
         var node = this.__data__.model;
 
@@ -223,7 +222,7 @@ window.onload = function()
             });
             save( formatMarkup() );
             draw();
-            cancelModal();
+            hideModals();
         }
 
         function deleteNode()
@@ -231,7 +230,7 @@ window.onload = function()
             graphModel.deleteNode(node);
             save( formatMarkup() );
             draw();
-            cancelModal();
+            hideModals();
         }
 
         captionField.on("keypress", onControlEnter(saveChange) );
@@ -244,8 +243,7 @@ window.onload = function()
     function editRelationship()
     {
         var editor = d3.select(".pop-up-editor.relationship");
-        appendModalBackdrop();
-        editor.classed( "hide", false );
+        showModal(".pop-up-editor.relationship");
 
         var relationship = this.__data__.model;
 
@@ -274,7 +272,7 @@ window.onload = function()
             });
             save( formatMarkup() );
             draw();
-            cancelModal();
+            hideModals();
         }
 
         function reverseRelationship()
@@ -282,7 +280,7 @@ window.onload = function()
             relationship.reverse();
             save( formatMarkup() );
             draw();
-            cancelModal();
+            hideModals();
         }
 
         function deleteRelationship()
@@ -290,7 +288,7 @@ window.onload = function()
             graphModel.deleteRelationship(relationship);
             save( formatMarkup() );
             draw();
-            cancelModal();
+            hideModals();
         }
 
         relationshipTypeField.on("keypress", onControlEnter(saveChange) );
@@ -315,26 +313,22 @@ window.onload = function()
         return markup;
     }
 
-    function cancelModal()
+    function hideModals()
     {
-        d3.selectAll( ".modal" ).classed( "hide", true );
-        d3.selectAll( ".modal-backdrop" ).remove();
+        $(".modal").modal("hide");
     }
 
-    d3.selectAll( ".btn.cancel" ).on( "click", cancelModal );
-    d3.selectAll( ".modal" ).on( "keyup", function() { if ( d3.event.keyCode === 27 ) cancelModal(); } );
+    d3.selectAll( ".btn.cancel" ).on( "click", hideModals );
+    d3.selectAll( ".modal" ).on( "keyup", function() { if ( d3.event.keyCode === 27 ) hideModals(); } );
 
-    function appendModalBackdrop()
+    function showModal(selector)
     {
-        d3.select( "body" ).append( "div" )
-            .attr( "class", "modal-backdrop" )
-            .on( "click", cancelModal );
+        $(selector).modal("show");
     }
 
     var exportMarkup = function ()
     {
-        appendModalBackdrop();
-        d3.select( ".modal.export-markup" ).classed( "hide", false );
+        showModal(".modal.export-markup");
 
         var markup = formatMarkup();
         d3.select( "textarea.code" )
@@ -357,7 +351,7 @@ window.onload = function()
         graphModel = parseMarkup( markup );
         save( markup );
         draw();
-        cancelModal();
+        hideModals();
     };
 
     d3.select( "#save_markup" ).on( "click", useMarkupFromMarkupEditor );
@@ -373,8 +367,7 @@ window.onload = function()
 
     var chooseStyle = function()
     {
-        appendModalBackdrop();
-        d3.select( ".modal.choose-style" ).classed( "hide", false );
+        showModal(".modal.choose-style");
     };
 
     d3.select("#saveStyle" ).on("click", function() {
@@ -386,7 +379,7 @@ window.onload = function()
         graphModel = parseMarkup( localStorage.getItem( "graph-diagram-markup" ) );
         save(formatMarkup());
         draw();
-        cancelModal();
+        hideModals();
     });
 
     function changeInternalScale() {

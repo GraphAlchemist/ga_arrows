@@ -206,6 +206,9 @@ window.onload = function()
             return previous + property.key + ": " + property.value + "\n";
         }, "");
 
+        var fillColorField = editor.select("#node_fill_color");
+        fillColorField.node().value = node.style("background-color");
+
         function saveChange()
         {
             node.caption( captionField.node().value );
@@ -220,6 +223,8 @@ window.onload = function()
                     }
                 }
             });
+            node.style("background-color", fillColorField.node().value);
+
             save( formatMarkup() );
             draw();
             hideModals();

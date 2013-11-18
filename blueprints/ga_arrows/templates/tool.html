@@ -111,10 +111,11 @@
 </div>
 
 
-{% block extrajs %}
+{% block scripts %}
+{{super()}}
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/d3.v3.js')}}"></script>
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-diagram.js')}}"></script>
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-editor.js')}}"></script>
-{% endblock extrajs %}
+{% endblock scripts %}
 
 {% endblock body %}

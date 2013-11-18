@@ -22,9 +22,9 @@ All of the necessary components of ga_arrows are stored in the ga_arrows directo
 Blueprints are a modular way to reuse programs in Flask.
 
 ####Some thoughts####
-1. All of the orignal arrows code was originally commited by itelf.
-1. The second commit is getting flask installed.
-1. The third commit is getting arrows shoved into flask.
+1. All of the orignal arrows code was first commited by itelf
+1. The second commit is getting flask installed
+1. The third commit is getting arrows shoved into flask
 
 * There are some differences between the version of arrows at http://www.apcjones.com/arrows/#, and the github code https://github.com/apcj/arrows.
 

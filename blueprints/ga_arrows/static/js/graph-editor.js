@@ -94,9 +94,15 @@ window.onload = function()
             .call(diagram);
     }
 
-    function save( markup )
+    function save( data )
     {
+        var markup = data['markup']
+        var GraphJSON = data['GraphJSON']
+        
         localStorage.setItem( "graph-diagram-markup", markup );
+        //TODO: GraphJSON is getting stored as an object, instead of the full data
+        localStorage.setItem( "GraphJSON", GraphJSON);
+
         localStorage.setItem( "graph-diagram-style", d3.select( "link.graph-style" ).attr( "href" ) );
     }
 
@@ -303,6 +309,8 @@ window.onload = function()
 
     function formatMarkup()
     {
+        var data = {};
+
         var container = d3.select( "body" ).append( "div" );
         gd.markup.format( graphModel, container );
         var markup = container.node().innerHTML;
@@ -312,7 +320,55 @@ window.onload = function()
             .replace( /<\/span><\/li/g, "</span>\n  </li" )
             .replace( /<\/ul/, "\n</ul" );
         container.remove();
-        return markup;
+
+        GraphJSON = {"nodes":[],"edges":[]}
+        elements = container.selectAll('li')[0]
+        
+        for (var i = 0, n = elements.length; i < n; i++) {
+            var e = elements[i]
+            if (e.className == "node") {
+                var e_node = {};
+                e_node['id'] = e.getAttribute('data-node-id');
+                e_node['x'] = e.getAttribute('data-x');
+                e_node['y'] = e.getAttribute('data-y');
+                if (e.hasChildNodes()) {
+                    try {
+                        var caption = e.getElementsByClassName('caption')[0].innerHTML;
+                    }
+                    catch (e) {
+                        caption = null;
+                    }
+                    try {
+                        var labels = e.getElementsByClassName('labels')[0].innerHMTL;   
+                    }
+                    catch (e) {    
+                        labels = null;
+                    }
+                    try {
+                        var properties = e.getElementsByClassName('properties')[0].innerHMTL;
+                    }
+                    catch (e) {
+                        properties = null;
+                    }
+                    e_node['caption'] = caption;
+                    e_node['labels'] = labels;
+                    e_node['properties'] = properties;
+                }
+                GraphJSON.nodes.push(e_node);
+            }
+            if (e.className == "relationship") {
+                var e_edge = {};
+                e_edge['source'] = e.getAttribute('data-from');
+                e_edge['target'] = e.getAttribute('data-to');
+                /* node_type, etc. */
+                GraphJSON.edges.push(e_edge);
+            }
+        }
+
+        data['markup'] = markup;
+        data['GraphJSON'] = GraphJSON;
+
+        return data;
     }
 
     function cancelModal()

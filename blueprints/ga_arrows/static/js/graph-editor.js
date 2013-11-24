@@ -5,7 +5,7 @@ window.onload = function()
     {
         graphModel = gd.model();
         graphModel.createNode().x( 0 ).y( 0 );
-        save( formatMarkup() );
+        save( formatData() );
     }
     if ( localStorage.getItem( "graph-diagram-style" ) )
     {
@@ -96,8 +96,8 @@ window.onload = function()
 
     function save( data )
     {
-        var markup = data['markup']
-        var GraphJSON = data['GraphJSON']
+        var markup = data['markup'];
+        var GraphJSON = data['GraphJSON'];
         
         localStorage.setItem( "graph-diagram-markup", markup );
         //TODO: GraphJSON is getting stored as an object, instead of the full data
@@ -173,7 +173,7 @@ window.onload = function()
             }
         }
         newNode = null;
-        save( formatMarkup() );
+        save( formatData() );
         diagram.scaling(gd.scaling.centerOrScaleDiagramToFitSvgSmooth);
         draw();
     }
@@ -181,7 +181,7 @@ window.onload = function()
     d3.select( "#add_node_button" ).on( "click", function ()
     {
         graphModel.createNode().x( 0 ).y( 0 );
-        save( formatMarkup() );
+        save( formatData() );
         draw();
     } );
 
@@ -231,7 +231,7 @@ window.onload = function()
             });
             node.style("background-color", fillColorField.node().value);
 
-            save( formatMarkup() );
+            save( formatData() );
             draw();
             hideModals();
         }
@@ -239,7 +239,7 @@ window.onload = function()
         function deleteNode()
         {
             graphModel.deleteNode(node);
-            save( formatMarkup() );
+            save( formatData() );
             draw();
             hideModals();
         }
@@ -281,7 +281,7 @@ window.onload = function()
                     }
                 }
             });
-            save( formatMarkup() );
+            save( formatData() );
             draw();
             hideModals();
         }
@@ -289,7 +289,7 @@ window.onload = function()
         function reverseRelationship()
         {
             relationship.reverse();
-            save( formatMarkup() );
+            save( formatData() );
             draw();
             hideModals();
         }
@@ -297,7 +297,7 @@ window.onload = function()
         function deleteRelationship()
         {
             graphModel.deleteRelationship(relationship);
-            save( formatMarkup() );
+            save( formatData() );
             draw();
             hideModals();
         }
@@ -312,8 +312,6 @@ window.onload = function()
 
     function formatMarkup()
     {
-        var data = {};
-
         var container = d3.select( "body" ).append( "div" );
         gd.markup.format( graphModel, container );
         var markup = container.node().innerHTML;
@@ -324,11 +322,17 @@ window.onload = function()
             .replace( /<\/ul/, "\n</ul" );
         container.remove();
 
-        GraphJSON = {"nodes":[],"edges":[]}
-        elements = container.selectAll('li')[0]
+        return markup;
+    }
+
+    function formatGraphJSON()
+    {
+        var container = d3.select( "body" ).append( "div" );
+        var GraphJSON = { "nodes": [], "edges": [] };
+        var elements = container.selectAll('li')[0];
         
         for (var i = 0, n = elements.length; i < n; i++) {
-            var e = elements[i]
+            var e = elements[i];
             if (e.className == "node") {
                 var e_node = {};
                 e_node['id'] = e.getAttribute('data-node-id');
@@ -368,8 +372,14 @@ window.onload = function()
             }
         }
 
-        data['markup'] = markup;
-        data['GraphJSON'] = GraphJSON;
+        return GraphJSON;
+    }
+
+    function formatData()
+    {
+        var data = {};
+        data['markup'] = formatMarkup();
+        data['GraphJSON'] = formatGraphJSON();
 
         return data;
     }
@@ -391,7 +401,7 @@ window.onload = function()
     {
         showModal(".modal.export-markup");
 
-        var markup = formatMarkup();
+        var markup = formatData();
         d3.select( "textarea.code" )
             .attr( "rows", markup.split( "\n" ).length * 2 )
             .node().value = markup;
@@ -438,7 +448,7 @@ window.onload = function()
             .attr("href", "style/" + selectedStyle);
 
         graphModel = parseMarkup( localStorage.getItem( "graph-diagram-markup" ) );
-        save(formatMarkup());
+        save(formatData());
         draw();
         hideModals();
     });

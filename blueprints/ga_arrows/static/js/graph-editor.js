@@ -101,7 +101,7 @@ window.onload = function()
         
         localStorage.setItem( "graph-diagram-markup", markup );
         //TODO: GraphJSON is getting stored as an object, instead of the full data
-        localStorage.setItem( "GraphJSON", GraphJSON);
+        localStorage.setItem( "GraphJSON", JSON.stringify( GraphJSON ) );
 
         localStorage.setItem( "graph-diagram-style", d3.select( "link.graph-style" ).attr( "href" ) );
     }

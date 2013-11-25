@@ -328,6 +328,7 @@ window.onload = function()
     function formatGraphJSON()
     {
         var container = d3.select( "body" ).append( "div" );
+        gd.markup.format( graphModel, container );
         var GraphJSON = { "nodes": [], "edges": [] };
         var elements = container.selectAll('li')[0];
         
@@ -371,6 +372,7 @@ window.onload = function()
                 GraphJSON.edges.push(e_edge);
             }
         }
+        container.remove();
 
         return GraphJSON;
     }

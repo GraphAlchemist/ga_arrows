@@ -213,6 +213,9 @@ window.onload = function()
         var fillColorField = editor.select("#node_fill_color");
         fillColorField.node().value = node.style("background-color");
 
+        var lineColorField = editor.select("#node_line_color");
+        lineColorField.node().value = node.style("border-color");
+
         function saveChange()
         {
             node.caption( captionField.node().value );
@@ -228,6 +231,7 @@ window.onload = function()
                 }
             });
             node.style("background-color", fillColorField.node().value);
+            node.style("border-color", lineColorField.node().value);
 
             save( formatData() );
             draw();

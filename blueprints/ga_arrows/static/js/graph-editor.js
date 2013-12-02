@@ -269,6 +269,9 @@ window.onload = function()
             return previous + property.key + ": " + property.value + "\n";
         }, "");
 
+        var lineColorField = editor.select("#relationship_line_color");
+        lineColorField.node().value = relationship.style("background-color");
+
         function saveChange()
         {
             relationship.relationshipType( relationshipTypeField.node().value );
@@ -283,6 +286,8 @@ window.onload = function()
                     }
                 }
             });
+            relationship.style("background-color", lineColorField.node().value);
+
             save( formatData() );
             draw();
             hideModals();

@@ -196,24 +196,24 @@ window.onload = function()
 
     function editNode()
     {
-        var editor = d3.select(".pop-up-editor.node");
-        showModal(".pop-up-editor.node");
+        var editor = d3.select(".sidebar > .nodeeditor");
+        editor.classed("hide", false);
 
         var node = this.__data__.model;
 
-        var captionField = editor.select("#node_caption");
+        var captionField = editor.select("#sb_node_caption");
         captionField.node().value = node.caption() || "";
         captionField.node().select();
 
-        var propertiesField = editor.select("#node_properties");
+        var propertiesField = editor.select("#sb_node_properties");
         propertiesField.node().value = node.properties().list().reduce(function(previous, property) {
             return previous + property.key + ": " + property.value + "\n";
         }, "");
 
-        var fillColorField = editor.select("#node_fill_color");
+        var fillColorField = editor.select("#sb_node_fill_color");
         fillColorField.node().value = node.style("background-color");
 
-        var lineColorField = editor.select("#node_line_color");
+        var lineColorField = editor.select("#sb_node_line_color");
         lineColorField.node().value = node.style("border-color");
 
         function saveChange()
@@ -235,7 +235,7 @@ window.onload = function()
 
             save( formatData() );
             draw();
-            hideModals();
+            editor.classed("hide", true);
         }
 
         function deleteNode()
@@ -243,14 +243,17 @@ window.onload = function()
             graphModel.deleteNode(node);
             save( formatData() );
             draw();
-            hideModals();
+            editor.classed("hide", true);
         }
 
         captionField.on("keypress", onControlEnter(saveChange) );
         propertiesField.on("keypress", onControlEnter(saveChange) );
+        fillColorField.on("keypress", onControlEnter(saveChange) );
+        lineColorField.on("keypress", onControlEnter(saveChange) );
 
-        editor.select("#edit_node_save").on("click", saveChange);
-        editor.select("#edit_node_delete").on("click", deleteNode);
+        editor.select("#sb_node_cancel").on("click", hideEditor);
+        editor.select("#sb_node_save").on("click", saveChange);
+        editor.select("#sb_node_delete").on("click", deleteNode);
     }
 
     function editRelationship()

@@ -263,21 +263,26 @@ window.onload = function()
 
     function editRelationship()
     {
-        var editor = d3.select(".pop-up-editor.relationship");
-        showModal(".pop-up-editor.relationship");
+        function hideEditor()
+        {
+            editor.classed("hide", true);
+        }
+
+        var editor = d3.select(".sidebar > .relationshipeditor");
+        editor.classed("hide", false);
 
         var relationship = this.__data__.model;
 
-        var relationshipTypeField = editor.select("#relationship_type");
+        var relationshipTypeField = editor.select("#sb_relationship_type");
         relationshipTypeField.node().value = relationship.relationshipType() || "";
         relationshipTypeField.node().select();
 
-        var propertiesField = editor.select("#relationship_properties");
+        var propertiesField = editor.select("#sb_relationship_properties");
         propertiesField.node().value = relationship.properties().list().reduce(function(previous, property) {
             return previous + property.key + ": " + property.value + "\n";
         }, "");
 
-        var lineColorField = editor.select("#relationship_line_color");
+        var lineColorField = editor.select("#sb_relationship_line_color");
         lineColorField.node().value = relationship.style("background-color");
 
         function saveChange()
@@ -298,7 +303,7 @@ window.onload = function()
 
             save( formatData() );
             draw();
-            hideModals();
+            hideEditor();
         }
 
         function reverseRelationship()
@@ -306,7 +311,7 @@ window.onload = function()
             relationship.reverse();
             save( formatData() );
             draw();
-            hideModals();
+            hideEditor();
         }
 
         function deleteRelationship()
@@ -314,15 +319,16 @@ window.onload = function()
             graphModel.deleteRelationship(relationship);
             save( formatData() );
             draw();
-            hideModals();
+            hideEditor();
         }
 
         relationshipTypeField.on("keypress", onControlEnter(saveChange) );
         propertiesField.on("keypress", onControlEnter(saveChange) );
 
-        editor.select("#edit_relationship_save").on("click", saveChange);
-        editor.select("#edit_relationship_reverse").on("click", reverseRelationship);
-        editor.select("#edit_relationship_delete").on("click", deleteRelationship);
+        editor.select("#sb_relationship_cancel").on("click", hideEditor);
+        editor.select("#sb_relationship_save").on("click", saveChange);
+        editor.select("#sb_relationship_reverse").on("click", reverseRelationship);
+        editor.select("#sb_relationship_delete").on("click", deleteRelationship);
     }
 
     function formatMarkup()

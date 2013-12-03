@@ -196,6 +196,11 @@ window.onload = function()
 
     function editNode()
     {
+        function hideEditor()
+        {
+            editor.classed("hide", true);
+        }
+
         var editor = d3.select(".sidebar > .nodeeditor");
         editor.classed("hide", false);
 
@@ -235,7 +240,7 @@ window.onload = function()
 
             save( formatData() );
             draw();
-            editor.classed("hide", true);
+            hideEditor();
         }
 
         function deleteNode()
@@ -243,7 +248,7 @@ window.onload = function()
             graphModel.deleteNode(node);
             save( formatData() );
             draw();
-            editor.classed("hide", true);
+            hideEditor();
         }
 
         captionField.on("keypress", onControlEnter(saveChange) );

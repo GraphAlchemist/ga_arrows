@@ -708,6 +708,10 @@ gd = {};
                 nodeMarkup.select( "dl.properties" ).each( parseProperties( node ) );
 
                 copyStyles(node, nodeMarkup);
+                var styles = JSON.parse(nodeMarkup.attr("data-style"));
+                for (var styleKey in styles) {
+                    node.style(styleKey, styles[styleKey]);
+                }
             });
 
             selection.selectAll(".relationship").each(function () {
@@ -722,6 +726,10 @@ gd = {};
                 relationshipMarkup.select( "dl.properties" ).each( parseProperties( relationship ) );
 
                 copyStyles(relationship, relationshipMarkup);
+                var styles = JSON.parse(relationshipMarkup.attr("data-style"));
+                for (var styleKey in styles) {
+                    relationship.style(styleKey, styles[styleKey]);
+                }
             });
 
             return model;
@@ -755,7 +763,8 @@ gd = {};
                     .attr("class", node.class().join(" "))
                     .attr("data-node-id", node.id)
                     .attr("data-x", node.x())
-                    .attr("data-y", node.y());
+                    .attr("data-y", node.y())
+                    .attr("data-style", JSON.stringify(node.style()));
 
                 if (node.caption()) {
                     li.append("span")
@@ -769,7 +778,8 @@ gd = {};
                 var li = ul.append("li")
                     .attr("class", relationship.class().join(" "))
                     .attr("data-from", relationship.start.id)
-                    .attr("data-to", relationship.end.id);
+                    .attr("data-to", relationship.end.id)
+                    .attr("data-style", JSON.stringify(relationship.style()));
 
                 if (relationship.relationshipType()) {
                     li.append("span")

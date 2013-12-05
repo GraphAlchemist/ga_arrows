@@ -24,6 +24,13 @@ svg.graphdiagram {
     border-radius: 4px;
 }
 
+.tool .btn#sb_node_cancel,
+.tool .btn#sb_node_save,
+.tool .btn#sb_relationship_cancel,
+.tool .btn#sb_relationship_save {
+    float: left;
+}
+
 .modal.pop-up-editor.node {
     position: absolute;
 }

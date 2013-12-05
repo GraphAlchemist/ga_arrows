@@ -360,6 +360,7 @@ window.onload = function()
                 e_node['id'] = e.getAttribute('data-node-id');
                 e_node['x'] = e.getAttribute('data-x');
                 e_node['y'] = e.getAttribute('data-y');
+                e_node['style'] = JSON.parse(e.getAttribute('data-style'));
                 if (e.hasChildNodes()) {
                     try {
                         var caption = e.getElementsByClassName('caption')[0].innerHTML;
@@ -389,6 +390,7 @@ window.onload = function()
                 var e_edge = {};
                 e_edge['source'] = e.getAttribute('data-from');
                 e_edge['target'] = e.getAttribute('data-to');
+                e_edge['style'] = JSON.parse(e.getAttribute('data-style'));
                 /* node_type, etc. */
                 GraphJSON.edges.push(e_edge);
             }

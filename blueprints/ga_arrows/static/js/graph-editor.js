@@ -421,9 +421,15 @@ window.onload = function()
             var isHidden = d3.event.target.checked ? true : false;
             d3.selectAll('.properties.layer .relationship-speech-bubble').classed("hide", isHidden);
         }
+        function toggleRelationshipTypes()
+        {
+            var isHidden = d3.event.target.checked ? true : false;
+            d3.selectAll('.relationships.layer .type').classed("hide", isHidden);
+        }
 
         d3.select('#hide_node_properties').on("click", toggleNodeProperties);
         d3.select('#hide_relationship_properties').on("click", toggleRelationshipProperties);
+        d3.select('#hide_relationship_types').on("click", toggleRelationshipTypes);
     }
     bindCheckboxToggleFunctions();
 

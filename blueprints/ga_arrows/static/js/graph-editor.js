@@ -29,7 +29,7 @@ window.onload = function()
             nodeOverlays.enter().append("circle")
                 .attr("class", "node overlay")
                 .call( d3.behavior.drag().on( "drag", drag ).on( "dragend", dragEnd ) )
-                .on( "dblclick", editNode );
+                .on( "click", editNode );
 
             nodeOverlays
                 .attr("r", function(node) {
@@ -77,7 +77,7 @@ window.onload = function()
                 .attr("fill", "rgba(255, 255, 255, 0)")
                 .attr("stroke", "rgba(255, 255, 255, 0)")
                 .attr("stroke-width", "10px")
-                .on( "dblclick", editRelationship );
+                .on( "click", editRelationship );
 
             relationshipsOverlays
                 .attr("transform", function(r) {

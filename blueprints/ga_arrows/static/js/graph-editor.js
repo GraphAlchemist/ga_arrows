@@ -409,6 +409,24 @@ window.onload = function()
         return data;
     }
 
+    function bindCheckboxToggleFunctions()
+    {
+        function toggleNodeProperties()
+        {
+            var isHidden = d3.event.target.checked ? true : false;
+            d3.selectAll('.properties.layer .node-speech-bubble').classed("hide", isHidden);
+        }
+        function toggleRelationshipProperties()
+        {
+            var isHidden = d3.event.target.checked ? true : false;
+            d3.selectAll('.properties.layer .relationship-speech-bubble').classed("hide", isHidden);
+        }
+
+        d3.select('#hide_node_properties').on("click", toggleNodeProperties);
+        d3.select('#hide_relationship_properties').on("click", toggleRelationshipProperties);
+    }
+    bindCheckboxToggleFunctions();
+
     function hideModals()
     {
         $(".modal").modal("hide");

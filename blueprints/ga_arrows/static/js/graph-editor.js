@@ -411,6 +411,11 @@ window.onload = function()
 
     function bindCheckboxToggleFunctions()
     {
+        function toggleNodeCaptions()
+        {
+            var isHidden = d3.event.target.checked ? true : false;
+            d3.selectAll('.nodes.layer .caption').classed("hide", isHidden);
+        }
         function toggleNodeProperties()
         {
             var isHidden = d3.event.target.checked ? true : false;
@@ -428,6 +433,7 @@ window.onload = function()
         }
 
         d3.select('#hide_node_properties').on("click", toggleNodeProperties);
+        d3.select('#hide_node_captions').on("click", toggleNodeCaptions);
         d3.select('#hide_relationship_properties').on("click", toggleRelationshipProperties);
         d3.select('#hide_relationship_types').on("click", toggleRelationshipTypes);
     }

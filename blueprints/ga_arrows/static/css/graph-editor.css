@@ -31,6 +31,10 @@ svg.graphdiagram {
     float: left;
 }
 
+.colorpicker {
+    z-index: 100;
+}
+
 .modal.pop-up-editor.node {
     position: absolute;
 }

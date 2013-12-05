@@ -439,6 +439,31 @@ window.onload = function()
     }
     bindCheckboxToggleFunctions();
 
+    function bindColorPickers()
+    {
+        var colorPickerFieldSelectors = [
+            '#sb_node_fill_color',
+            '#sb_node_line_color',
+            '#sb_relationship_line_color'
+        ];
+        var options = {
+            onBeforeShow: function () {
+                $(this).ColorPickerSetColor(this.value);
+            },
+            onSubmit: function(hsb, hex, rgb, el) {
+                $(el).val("#" + hex);
+                $(el).ColorPickerHide();
+            }
+        };
+
+        $(colorPickerFieldSelectors.join())
+            .ColorPicker(options)
+            .bind('keyup', function() {
+                $(this).ColorPickerSetColor(this.value);
+            });
+    }
+    bindColorPickers();
+
     function hideModals()
     {
         $(".modal").modal("hide");
@@ -450,6 +475,13 @@ window.onload = function()
     document.body.addEventListener("keyup", function(e) {
         if ( e.keyCode === 27 ) {
             d3.selectAll('.tool').classed("hide", true);
+
+            // Special case note:
+            // Using "display: none" instead of class "hide" since the color picker
+            // already toggles its own visibility with this method. (The color
+            // picker would not be able to remove the "hide" class itself as it is
+            // currently written.)
+            d3.selectAll('.colorpicker').style("display", "none");
         }
     }, false);
 

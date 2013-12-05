@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="{{url_for('ga_arrows.static', filename='css/graph-diagram.css')}}" type="text/css">
   <link rel="stylesheet" class="graph-style" href= "{{url_for('ga_arrows.static', filename='css/graph-style-chunky.css')}}" type="text/css">
   <link rel="stylesheet" href="{{url_for('ga_arrows.static', filename='css/graph-editor.css')}}" type="text/css">
+  <link rel="stylesheet" media="screen" type="text/css" href="{{url_for('ga_arrows.static', filename='css/colorpicker.css')}}" />
   {% endblock extracss %}
 
 {% block body %}
@@ -235,6 +236,7 @@
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/d3.v3.js')}}"></script>
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-diagram.js')}}"></script>
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-editor.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/colorpicker.js')}}"></script>
 {% endblock scripts %}
 
 {% endblock body %}

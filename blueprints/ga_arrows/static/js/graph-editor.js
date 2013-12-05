@@ -201,7 +201,7 @@ window.onload = function()
             editor.classed("hide", true);
         }
 
-        var editor = d3.select(".sidebar > .nodeeditor");
+        var editor = d3.select(".nodeeditor");
         editor.classed("hide", false);
 
         var node = this.__data__.model;
@@ -268,7 +268,7 @@ window.onload = function()
             editor.classed("hide", true);
         }
 
-        var editor = d3.select(".sidebar > .relationshipeditor");
+        var editor = d3.select(".relationshipeditor");
         editor.classed("hide", false);
 
         var relationship = this.__data__.model;

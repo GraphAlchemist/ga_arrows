@@ -15,13 +15,12 @@ svg.graphdiagram {
     background-color: #f7f7f7;
 }
 
-.sidebar {
+.tool {
     z-index: 100;
-    position: absolute;
-    right: 10px;
-    top: 100px;
+    margin: 10px 0px 0px 0px;
     padding: 10px;
-    background-color: #f7f7f7;
+    text-align: right;
+    border-radius: 4px;
 }
 
 .modal.pop-up-editor.node {

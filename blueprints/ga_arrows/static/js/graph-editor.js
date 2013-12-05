@@ -414,6 +414,12 @@ window.onload = function()
 
     d3.selectAll( ".btn.cancel" ).on( "click", hideModals );
     d3.selectAll( ".modal" ).on( "keyup", function() { if ( d3.event.keyCode === 27 ) hideModals(); } );
+    // d3.selectAll( ".canvas" ).on( "keyup", function() { if ( d3.event.keyCode === 27 ) console.log("hi"); } );
+    document.body.addEventListener("keyup", function(e) {
+        if ( e.keyCode === 27 ) {
+            d3.selectAll('.tool').classed("hide", true);
+        }
+    }, false);
 
     function showModal(selector)
     {

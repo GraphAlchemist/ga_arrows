@@ -16,6 +16,10 @@ svg.graphdiagram {
     background-color: #f7f7f7;
 }
 
+.tools textarea {
+    width: 154px;
+}
+
 .tool {
     z-index: 100;
     margin: 10px 0px 0px 0px;

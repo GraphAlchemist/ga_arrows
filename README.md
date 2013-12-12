@@ -1,6 +1,6 @@
 ### This project has [moved](https://github.com/GraphAlchemist/GraphJSON.io) and is being ported to Angular.
 
-### Inspired (and with original code) by APC Jones [Arrows project](https://github.com/apcj/arrows) and deployed at [GraphJSON.io](www.GraphJSON.io)
+### Inspired (and with original code) by APC Jones [Arrows project](https://github.com/apcj/arrows) and deployed at [GraphJSON.io](http://www.GraphJSON.io)
 
 
 ###Get setup###

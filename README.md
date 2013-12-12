@@ -1,3 +1,8 @@
+### This project has [moved](https://github.com/GraphAlchemist/GraphJSON.io) and is being ported to Angular.
+
+### Inspired (and with original code) by APC Jones [Arrows project](https://github.com/apcj/arrows) and deployed at [GraphJSON.io](www.GraphJSON.io)
+
+
 ###Get setup###
 
 *Make sure you have [virtualenv](http://www.virtualenv.org/en/latest/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) installed.*
@@ -17,14 +22,7 @@ Dependencies installed seperately, [Flask-Bootstrap](http://pythonhosted.org/Fla
 
 Now flask should be running at http://localhost:5000/
 
-Right now the arrows tool is set up at http://localhost:5000/ga_arrows/tool.
-The whole project is named ga_arrows, but the important pieces will be a 'blueprint'.
-All of the necessary components of ga_arrows are stored in the ga_arrows directory in "blueprints."
-Blueprints are a modular way to reuse programs in Flask.  Is there more pain in working in blueprints, not really,
-they are a lot like applications, however they don't actually 'run.'  Rather they are called and rendered
-by the application.  The better question is, is this complete overkill in this case - the answer would be yes.  However,
-the reason we are developing a "blueprint" rather than a flask "app" is so that we can easily plug the blueprint in
-to other flask apps we might have.
+**Right now the arrows tool is set up at http://localhost:5000/ga_arrows/tool.**
 
 ####Some thoughts####
 1. All of the orignal arrows code was first commited by itelf

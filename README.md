@@ -25,16 +25,16 @@ Now flask should be running at http://localhost:5000/
 **Right now the arrows tool is set up at http://localhost:5000/ga_arrows/tool.**
 
 ####Some thoughts####
-1. All of the orignal arrows code was first commited by itelf
+1. All of the orignal arrows code was first commited by itself
 1. The second commit is getting flask installed
 1. The third commit is getting arrows shoved into flask
 
 * There are some differences between the version of arrows at http://www.apcjones.com/arrows/#, and the github code https://github.com/apcj/arrows.
 
-1. All of the orignal arrows code was originally commited by itelf  
+1. All of the orignal arrows code was originally commited by itself  
 2. The second commit is getting flask installed 
 3. The third commit is getting arrows shoved into flask 
 
 * There are some differences between the version of arrows at http://www.apcjones.com/arrows/#, and the github code https://github.com/apcj/arrows
-* There are also some slight differences with the version we are currently running.  This is likely because Apcj used Bootstrap 2 and we've installed Bootstrap 3 with Flask-Bootsrap
+* There are also some slight differences with the version we are currently running.  This is likely because Apcj used Bootstrap 2 and we've installed Bootstrap 3 with Flask-Bootstrap
 * Finally, we've started the project with an oustanding bug!  Yay!  Check it out in the issues

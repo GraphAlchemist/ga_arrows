@@ -10,226 +10,272 @@
 {% block body %}
 
 <div class="tools form-inline well">
-  <button class="btn" id="add_node_button"><i class="icon-plus"></i>New Node</button>
-  <button class="btn" id="exportMarkupButton">Export Markup</button>
-  <button class="btn" id="exportSvgButton">Export SVG</button>
-  <br><br>
-  <label for="internalScale">Internal Scale</label>
-  <input id="internalScale" type="range" min="0.1" max="5" value="1" step="0.01">
-  <br>
-  <input id="hide_node_captions" type="checkbox">
-  <label for="hide_node_captions">Hide node captions</label>
-  <br>
-  <input id="hide_node_properties" type="checkbox">
-  <label for="hide_node_properties">Hide node properties</label>
-  <br>
-  <input id="hide_relationship_properties" type="checkbox">
-  <label for="hide_relationship_properties">Hide relationship properties</label>
-  <br>
-  <input id="hide_relationship_types" type="checkbox">
-  <label for="hide_relationship_types">Hide relationship types</label>
-  <div class="tool nodeeditor hide">
-    <div class="nodedata">
-      <ul>
-        <li>
-          <label for="sb_node_labels">Node Labels</label>
-          <input id="sb_node_labels" type="text"></input>
-        </li>
-        <li>
-          <label for="sb_node_properties">Node Properties</label>
-          <textarea id="sb_node_properties" rows="1"></textarea>
-        </li>
-        <li>
-          <label for="sb_node_caption">Node Caption</label>
-          <input id="sb_node_caption" type="text"></input>
-        </li>
-        <li>
-          <label for="sb_node_fill_color">Node Fill Color</label>
-          <input id="sb_node_fill_color" type="text"></input>
-        </li>
-        <li>
-          <label for="sb_node_line_color">Node Line Color</label>
-          <input id="sb_node_line_color" type="text"></input>
-        </li>
-      </ul>
-    </div>
-    <a href="#" class="btn cancel" id="sb_node_cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="sb_node_save">Save</a>
-    <a href="#" class="btn btn-danger" id="sb_node_delete">Delete</a>
+  <div id="switch" data-toggle="collapse" data-target="#panel" class="glyphicon glyphicon-chevron-down pull-right" style="cursor: pointer;"></div>
+  <div id="button-bar">    
+      <button class="btn custom" id="add_node_button"><i class="icon-plus"></i>New Node</button>
+      {#<button class="btn" id="exportMarkupButton">Export Markup</button>#}
+      <button class="btn custom" id="exportSvgButton">Export SVG</button>
+      <button class="btn custom" id="exportGraphJSONButton">Export GraphJSON</button>
   </div>
-  <div class="tool relationshipeditor hide">
-    <div class="relationshipdata">
-      <ul>
-        <li>
-          <label for="sb_relationship_type">Relationship Type</label>
-          <input id="sb_relationship_type" type="text"></input>
-        </li>
-        <li>
-          <label for="sb_relationship_properties">Relationship Properties</label>
-          <textarea id="sb_relationship_properties" rows="1"></textarea>
-        </li>
-        <li>
-          <label for="sb_relationship_caption">Relationship Caption</label>
-          <input id="sb_relationship_caption" type="text"></input>
-        </li>
-        <li>
-          <label for="sb_relationship_line_color">Relationship Line Color</label>
-          <input id="sb_relationship_line_color" type="text"></input>
-        </li>
-      </ul>
-    </div>
-    <a href="#" class="btn cancel" id="sb_relationship_cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="sb_relationship_save">Save</a>
-    <a href="#" class="btn" id="sb_relationship_reverse">Reverse</a>
-    <a href="#" class="btn btn-danger" id="sb_relationship_delete">Delete</a>
-  </div>
-</div>
+      <div id="panel" class="collapse">
+        <label for="internalScale">Internal Scale</label>
+        <input id="internalScale" type="range" min="0.1" max="5" value="1" step="0.01">
+        <br>
+        <input id="hide_node_captions" type="checkbox">
+        <label for="hide_node_captions">Hide node captions</label>
+        <br>
+        <input id="hide_node_properties" type="checkbox">
+        <label for="hide_node_properties">Hide node properties</label>
+        <br>
+        <input id="hide_relationship_properties" type="checkbox">
+        <label for="hide_relationship_properties">Hide relationship properties</label>
+        <br>
+        <input id="hide_relationship_types" type="checkbox">
+        <label for="hide_relationship_types">Hide relationship types</label>
+        <div class="tool nodeeditor hide">
+          <div class="nodedata">
+            <ul>
+              {# 
+              <li>
+                <label for="sb_node_labels">Node Labels</label>
+                <input id="sb_node_labels" type="text"></input>
+              </li> #}
+              <li>
+                <label for="sb_node_properties">Node Properties</label>
+                <textarea placeholder="Your data needs to be wrapped by '{' '}' and needs to contain at least one ':' for :labels or property key:values" id="sb_node_properties" rows="1"></textarea>
+              </li>
+              <li>
+                <label for="sb_node_caption">Node Caption</label>
+                <input id="sb_node_caption" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_node_fill_color">Node Fill Color</label>
+                <input id="sb_node_fill_color" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_node_line_color">Node Line Color</label>
+                <input id="sb_node_line_color" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_node_caption_color">Node Caption Color</label>
+                <input id="sb_node_caption_color" type="text"></input>
+              </li>
 
-<!--<input id="node_name_editor" class="editor-field">-->
-
-<div class="modal hide export-markup">
-  <div class="modal-header">
-    <h3>Edit/Export markup</h3>
-  </div>
-  <div class="modal-body">
-    <textarea class="code">Some text</textarea>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn cancel">Cancel</a>
-    <a href="#" class="btn btn-primary" id="save_markup">Save</a>
-  </div>
-</div>
-
-
-<div class="modal export-markup">
-  <div class="modal-dialog">
-    <div class="modal-content">  
-      <div class="modal-header">
-        <h3>Edit/Export markup</h3>
-      </div>
-      <div class="modal-body">
-        <textarea class="code">Some text</textarea>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn cancel">Cancel</a>
-        <a href="#" class="btn btn-primary" id="save_markup">Save</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal choose-style">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Choose Style</h3>
-      </div>
-      <div class="modal-body">
-        <label class="radio">
-          <input type="radio" name="styleChoice" value="graph-style-chunky.css" checked>
-          Chunky
-        </label>
-        <label class="radio">
-          <input type="radio" name="styleChoice" value="graph-style-bootstrap.css">
-          Bootstrap
-        </label>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn cancel">Cancel</a>
-        <a href="#" class="btn btn-primary" id="saveStyle">Save</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal pop-up-editor node" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Edit Node</h3>
-      </div>
-      <div class="top-right-btn-bar">
-        <button class="btn btn-danger" id="edit_node_delete">Delete</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-horizontal">
-          <div class="control-group">
-            <label class="control-label" for="node_caption">Caption</label>
-            <div class="controls">
-              <input id="node_caption" type="text" value="A">
-            </div>
+            </ul>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="node_properties">Properties</label>
-            <div class="controls">
-              <textarea id="node_properties" rows="6"></textarea>
-            </div>
+          <a href="#" class="btn cancel" id="sb_node_cancel">Cancel</a>
+          <a href="#" class="btn btn-primary" id="sb_node_save">Save</a>
+          <a href="#" class="btn btn-danger" id="sb_node_delete">Delete</a>
+        </div>
+        <div class="tool relationshipeditor hide">
+          <div class="relationshipdata">
+            <ul>
+              <li>
+                <label for="sb_relationship_type">Edge Type</label>
+                <input id="sb_relationship_type" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_relationship_properties">Edge Properties</label>
+                <textarea placeholder="Your data needs to be wrapped by '{' '}' and needs to contain at least one ':' for :labels or property key:values" id="sb_relationship_properties" rows="1"></textarea>
+              </li>
+              <li>
+                <label for="sb_relationship_caption">Edge Caption</label>
+                <input id="sb_relationship_caption" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_relationship_line_color">Edge Color</label>
+                <input id="sb_relationship_line_color" type="text"></input>
+              </li>
+              <li>
+                <label for="sb_relationship_caption_color">Edge Caption Color</label>
+                <input id="sb_relationship_capation_color" type="text"></input>
+              </li>
+            </ul>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="node_fill_color">Fill Color</label>
-            <div class="controls">
-              <input id="node_fill_color" type="text" placeholder="rgb, rgba, or hex">
+          <a href="#" class="btn cancel" id="sb_relationship_cancel">Cancel</a>
+          <a href="#" class="btn btn-primary" id="sb_relationship_save">Save</a>
+          <a href="#" class="btn" id="sb_relationship_reverse">Reverse</a>
+          <a href="#" class="btn btn-danger" id="sb_relationship_delete">Delete</a>
+        </div>
+        <div class="pull-right">
+          <span id="help" class="glyphicon glyphicon-question-sign"></span>
+        </div>
+
+
+  {#<input id="node_name_editor" class="editor-field">#}
+
+      <div class="modal hide export-markup">
+    <div class="modal-header">
+      <h3>Edit/Export markup</h3>
+    </div>
+    <div class="modal-body">
+      <textarea class="code">Some text</textarea>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary" id="save_markup">Save</a>
+    </div>
+      </div>
+
+
+      <div class="modal export-markup">
+    <div class="modal-dialog">
+      <div class="modal-content">  
+        <div class="modal-header">
+          <h3>Edit/Export markup</h3>
+        </div>
+        <div class="modal-body">
+          <textarea class="code">Some text</textarea>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn cancel">Cancel</a>
+          <a href="#" class="btn btn-primary" id="save_markup">Save</a>
+        </div>
+      </div>
+    </div>
+      </div>
+
+      <div class="modal choose-style">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Choose Style</h3>
+        </div>
+        <div class="modal-body">
+          <label class="radio">
+            <input type="radio" name="styleChoice" value="graph-style-chunky.css" checked>
+            Chunky
+          </label>
+          <label class="radio">
+            <input type="radio" name="styleChoice" value="graph-style-bootstrap.css">
+            Bootstrap
+          </label>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn cancel">Cancel</a>
+          <a href="#" class="btn btn-primary" id="saveStyle">Save</a>
+        </div>
+      </div>
+    </div>
+      </div>
+
+    <div class="modal pop-up-editor node" tabindex="-1">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Node</h3>
+        </div>
+        <div class="top-right-btn-bar">
+          <button class="btn btn-danger" id="edit_node_delete">Delete</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="node_caption">Caption</label>
+              <div class="controls">
+                <input id="node_caption" type="text" value="A">
+              </div>
             </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="node_line_color">Line Color</label>
-            <div class="controls">
-              <input id="node_line_color" type="text" placeholder="rgb, rgba, or hex">
+            <div class="control-group">
+              <label class="control-label" for="node_properties">Properties</label>
+              <div class="controls">
+                <textarea id="node_properties" rows="6"></textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="node_fill_color">Fill Color</label>
+              <div class="controls">
+                <input id="node_fill_color" type="text" placeholder="rgb, rgba, or hex">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="node_line_color">Line Color</label>
+              <div class="controls">
+                <input id="node_line_color" type="text" placeholder="rgb, rgba, or hex">
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn cancel">Cancel</a>
-        <a href="#" class="btn btn-primary" id="edit_node_save">Save</a>
-      </div>
+        <div class="modal-footer">
+          <a href="#" class="btn cancel">Cancel</a>
+          <a href="#" class="btn btn-primary" id="edit_node_save">Save</a>
+        </div>
+      </div></div>
     </div>
+
+      <div class="modal pop-up-editor relationship" tabindex="-1">
+          <div class="modal-dialog">
+          <div class="modal-content">
+          <div class="modal-header">
+            <h3>Edit Relationship</h3>
+          </div>
+          <div class="top-right-btn-bar">
+            <button class="btn" id="edit_relationship_reverse">Reverse</button>
+            <button class="btn btn-danger" id="edit_relationship_delete">Delete</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="relationship_type">Type</label>
+                <div class="controls">
+                  <input id="relationship_type" type="text" value="R">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="relationship_properties">Properties</label>
+                <div class="controls">
+                  <textarea id="relationship_properties" rows="6"></textarea>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="relationship_line_color">Line Color</label>
+                <div class="controls">
+                  <input id="relationship_line_color" type="text" placeholder="rgb, rgba, or hex">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn cancel">Cancel</a>
+            <a href="#" class="btn btn-primary" id="edit_relationship_save">Save</a>
+          </div></div>
+          </div>
+      </div>
   </div>
 </div>
+<div id="canvas"></div>
 
-<div class="modal pop-up-editor relationship" tabindex="-1">
+<!-- Modal -->
+<div id="about-modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Edit Relationship</h3>
-      </div>
-      <div class="top-right-btn-bar">
-        <button class="btn" id="edit_relationship_reverse">Reverse</button>
-        <button class="btn btn-danger" id="edit_relationship_delete">Delete</button>
+        <button type="button" class="close about-modal-dismiss" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">About GraphJSON.io</h4>
       </div>
       <div class="modal-body">
-        <div class="form-horizontal">
-          <div class="control-group">
-            <label class="control-label" for="relationship_type">Type</label>
-            <div class="controls">
-              <input id="relationship_type" type="text" value="R">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="relationship_properties">Properties</label>
-            <div class="controls">
-              <textarea id="relationship_properties" rows="6"></textarea>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="relationship_line_color">Line Color</label>
-            <div class="controls">
-              <input id="relationship_line_color" type="text" placeholder="rgb, rgba, or hex">
-            </div>
-          </div>
-        </div>
+        <p>Distillery fap ethical, chia flexitarian mumblecore raw denim synth letterpress freegan High Life PBR&B lomo YOLO. Dreamcatcher flexitarian tote bag ethnic cred organic vinyl pour-over Austin disrupt Schlitz locavore, master cleanse meh. Sartorial Terry Richardson four loko 90's skateboard, Brooklyn Godard pickled fap gluten-free blog seitan freegan pork belly. DIY whatever Pitchfork literally raw denim. XOXO keffiyeh Terry Richardson Helvetica. Deep v bespoke organic Intelligentsia Marfa literally. Raw denim bespoke twee Shoreditch, readymade aesthetic scenester cred biodiesel chambray jean shorts.
+        </p><br>
+        <p>Lo-fi Echo Park you probably haven't heard of them, iPhone raw denim ethnic XOXO freegan pop-up drinking vinegar small batch cornhole messenger bag Shoreditch. Plaid tofu trust fund Shoreditch pickled. 3 wolf moon irony food truck cray, pour-over swag PBR. Tattooed shabby chic forage, vegan seitan sriracha next level fanny pack cornhole craft beer tofu Intelligentsia. Paleo McSweeney's pickled scenester single-origin coffee Wes Anderson, synth Schlitz Carles sustainable you probably haven't heard of them cray. PBR&B cornhole flexitarian selfies. Literally Odd Future flexitarian mustache actually Cosby sweater hoodie Marfa yr, synth YOLO selvage slow-carb.
+        </p><br>
+        <p>Kogi organic four loko mixtape before they sold out meh. Asymmetrical Austin narwhal, 90's Echo Park viral Tonx pug meggings banjo. Flannel keytar retro, vinyl dreamcatcher literally Marfa asymmetrical. Hella sartorial cray stumptown small batch, 8-bit Carles readymade locavore wayfarers lomo. Pickled seitan Portland VHS +1. Mlkshk art party kitsch lomo readymade, freegan McSweeney's meh chia semiotics. Pop-up gentrify XOXO, before they sold out American Apparel beard McSweeney's butcher Godard.
+        </p><br>
+        <p>Semiotics pickled pork belly asymmetrical Pitchfork whatever Neutra, disrupt put a bird on it cred dreamcatcher tote bag pour-over tofu +1. Selfies XOXO Godard you probably haven't heard of them locavore, hashtag quinoa High Life DIY aesthetic organic irony meh semiotics Shoreditch. Occupy deep v keytar, literally readymade beard lomo jean shorts Intelligentsia cornhole direct trade Pinterest pour-over Odd Future cardigan. Readymade DIY bicycle rights slow-carb American Apparel, gluten-free Brooklyn cornhole Tonx blog scenester lo-fi cray plaid sartorial. Blue Bottle next level Truffaut, 8-bit keffiyeh +1 artisan distillery you probably haven't heard of them ethical keytar try-hard. Authentic dreamcatcher chillwave, wayfarers typewriter Intelligentsia retro meggings locavore McSweeney's direct trade semiotics tattooed pop-up. Pickled selvage shabby chic trust fund pour-over.
+        </p><br>
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn cancel">Cancel</a>
-        <a href="#" class="btn btn-primary" id="edit_relationship_save">Save</a>
+        <button type="button" class="btn btn-default about-modal-dismiss">Close</button>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-<div id="canvas">
-</div>
-
+<!-- footer -->
+<div id="footer" class="footer well">
+      <div class="container pull-right">
+        <p class="text-muted">GraphJSON.io <span id="about" style="margin-left: 30px; cursor: pointer;">About</span></p>
+      </div>
+</div><!-- /footer -->
 
 {% block scripts %}
 {{super()}}
@@ -238,5 +284,5 @@
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/graph-editor.js')}}"></script>
   <script type="text/javascript" src="{{url_for('ga_arrows.static', filename='js/colorpicker.js')}}"></script>
 {% endblock scripts %}
-
 {% endblock body %}
+

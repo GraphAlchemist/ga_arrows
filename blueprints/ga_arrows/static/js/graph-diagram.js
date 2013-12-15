@@ -55,6 +55,7 @@ gd = {};
             var position = {};
             var prototypePosition;
             var caption;
+            var caption_color;
             var classes = [];
             var properties = new Properties(model.stylePrototype.nodeProperties);
 
@@ -168,6 +169,18 @@ gd = {};
                     return this;
                 }
                 return caption;
+            };
+
+            this.caption_color = function(color) {
+                if (arguments.length == 1) {
+                    caption_color = color;
+                    return this;
+                }
+                if (caption_color == undefined) {
+                    caption_color = " ";
+                    return this;
+                }
+                return caption_color;
             };
 
             this.properties = function() {
@@ -368,7 +381,8 @@ gd = {};
                 captionLines: measurement.captionLines,
                 captionLineHeight: measurement.captionLineHeight,
                 properties: gd.nodeSpeechBubble( graphModel )( node, measurement.radius ),
-                model: node
+                model: node,
+                caption_color: node.caption_color()
             };
             nodesById[node.id] = layoutNode;
             layoutModel.nodes.push(layoutNode);
@@ -704,6 +718,7 @@ gd = {};
                 node.y(nodeMarkup.attr("data-y"));
                 nodeMarkup.select("span.caption").each(function() {
                     node.caption(d3.select(this).text());
+                    node.caption_color(d3.select(this).attr("fill"));
                 });
                 nodeMarkup.select( "dl.properties" ).each( parseProperties( node ) );
 
@@ -769,6 +784,8 @@ gd = {};
                 if (node.caption()) {
                     li.append("span")
                         .attr("class", "caption")
+                        .attr("fill", node.caption_color())
+                        .attr("stroke", node.caption_color())
                         .text(node.caption());
                 }
                 formatProperties( node, li );
@@ -1460,6 +1477,8 @@ gd = {};
                 .attr("y", function ( line, i ) { return line.node.model.ey() + (i - (line.node.captionLines.length - 1) / 2) * line.node.captionLineHeight; })
                 .attr( "font-size", function ( line ) { return line.node.model.style( "font-size" ); } )
                 .attr( "font-family", function ( line ) { return line.node.model.style( "font-family" ); } )
+                .attr( "fill", function ( line ) { return line.node.model.caption_color(); } )
+                .attr( "stroke", function ( line ) { return line.node.model.caption_color(); } )
                 .text(function(d) { return d.caption; });
         }
 

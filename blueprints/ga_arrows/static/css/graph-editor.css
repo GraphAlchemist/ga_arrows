@@ -1,9 +1,8 @@
 svg.graphdiagram {
     position: absolute;
-    top: 0;
     left: 0;
     width: 100%;
-    height: 100%
+    bottom: 50px;
 }
 
 .tools {
@@ -13,7 +12,7 @@ svg.graphdiagram {
     right: 10px;
     top: 10px;
     padding: 10px;
-    background-color: #f7f7f7;
+    background-color: rgba(255, 253, 253, 0.76);
 }
 
 .tools textarea {
@@ -45,8 +44,9 @@ svg.graphdiagram {
 
 .modal.export-markup {
     position: absolute;
-    width: 800px;
+    /*width: 800px;
     margin-left: -400px;
+    */
 }
 
 .modal.export-markup .modal-body {
@@ -80,18 +80,106 @@ textarea.code {
 }
 
 circle.node.overlay:hover {
-    fill: rgba(150, 150, 255, 0.5);
+    fill: rgba(51, 153, 255, 0.4);
+    cursor: pointer;
 }
 
 circle.node.ring:hover {
-    stroke: rgba(150, 150, 255, 0.5);
+    stroke: rgba(232, 150, 25, 0.4);
+    cursor: pointer;
 }
 
 path.relationship.overlay:hover {
-    fill: rgba(150, 150, 255, 0.5);
-    stroke: rgba(150, 150, 255, 0.5);
+    fill: rgba(51, 153, 255, 0.4);
+    stroke: rgba(51, 153, 255, 0.4);
+    cursor: pointer;
 }
 
 ul {
     list-style-type: none;
 }
+
+.btn-primary {
+    background-color: rgba(232, 150, 25, 0.4);
+    border-color: rgba(232, 150, 25, 0.4);
+    color: #000;
+}
+
+.btn.custom {
+    background-color: rgba(51, 153, 255, 0.4);
+    border-color: rgba(51, 153, 255, 0.4);
+}
+
+.btn-danger {
+    background-color: rgba(217, 83, 79, 0.4);
+    border-color: rgba(217, 83, 79, 0.4);
+    color: #000;
+}
+
+.popover {
+    max-width: 400px;
+}
+
+.popover li {
+    list-style: none;   
+}
+
+#button-bar {
+    margin-bottom: 15px;
+}
+
+#alert-messages {
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  z-index: 7000;
+}
+
+.alert {
+    margin-bottom: 0;
+}
+
+/*
+causes bootstrap "collapse" to 'snap', instead of close smoothly
+#panel {
+    padding-top: 5px;
+}
+*/
+
+#about-modal .modal-dialog {
+    padding-top: 10px;
+}
+
+.modal-backdrop {
+    background-color: rgba(51, 153, 255, 0.2);
+}
+
+#footer {
+  height: 50px;
+  background-color: rgba(255, 253, 253, 0.76);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 15px 15px 15px 15px;
+}
+
+#footer .container {
+  width: auto;
+  max-width: 680px;
+}
+
+/*
+TODO - make checkboxes pretty
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    background:url(check_radio_sheet.png) left top no-repeat;
+}
+*/

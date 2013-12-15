@@ -142,10 +142,11 @@
 	position: absolute;
 	width: 22px;
 	height: 22px;
-	background: url(../img/colorpicker_submit.png) top;
-	left: 322px;
+	left: 297px;
 	top: 142px;
-	overflow: hidden;
+	overflow: visible;
+	color: white;
+	/*background: url(../img/colorpicker_submit.png) top;*/
 }
 .colorpicker_focus {
 	background-position: center;

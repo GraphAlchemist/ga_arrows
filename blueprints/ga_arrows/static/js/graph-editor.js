@@ -2,22 +2,68 @@ window.onload = function()
 {
     var graphModel;
     if ( !localStorage.getItem( "graph-diagram-markup" ) )
-    {
-        graphModel = gd.model();
-        graphModel.createNode().x( 0 ).y( 0 );
-        save( formatData() );
-    }
+        {
+            graphModel = gd.model();
+            graphModel.createNode().x( 0 ).y( 0 );
+            save( formatData() );
+        }
+
+    var alert_content = ' <div id="alert-messages"> <div class="alert alert-success fade in"> <a class="close" data-dismiss="alert" href="\#" aria-hidden="true"> <div class="glyphicon glyphicon-chevron-down"></div> </a>GraphJSON.io is in experimental Alpha.  e.g. there may be bugs and unexpected behavior.  Please pardon our dust, and don\'t build anything TOO important! </div> </div>'
+    
+    if ( !localStorage.getItem ( "has-visited-flag") )
+        {
+            
+            $("body").append(alert_content);// "#footer");
+        }
+
     if ( localStorage.getItem( "graph-diagram-style" ) )
-    {
-        d3.select( "link.graph-style" )
-            .attr( "href", localStorage.getItem( "graph-diagram-style" ) );
-    }
+        {
+            d3.select( "link.graph-style" )
+                .attr( "href", localStorage.getItem( "graph-diagram-style" ) );
+        }
+
     graphModel = parseMarkup( localStorage.getItem( "graph-diagram-markup" ) );
+
+    var help_content = " \ <ul class='list-unstyled'>  <li><strong class='text-danger'>Properties:</strong> each property key: value <strong>MUST</strong> contain a ':' and <strong>MUST</strong> be on its own line.</li> \
+                            <li><strong>Export:</strong> the graph can be exported as an svg or a GraphJSON document.</li> \
+                            <li><strong>Reverse:</strong> to reverse direction of arrows.</li> \
+                            <li><strong>Drag to pan:</strong> nodes to the edge of the canvas to pan the graph.</li> \
+                            <li><strong>Drag to create multiple relationships:</strong> drag edge of node to existing node to create a new edge.</li> \
+                            <li><strong>Save:</strong> colors as well as node and edge data.</li> \
+                         </ul>\
+                       "
+    
+    $("#help")
+        .popover({
+            trigger: "hover focus",
+            placement: "left",
+            content: help_content,
+            html: true,
+            delay: { show: 0, hide: 500 }
+        });
+    
+    $("#about").on("click", function(event) {
+        $("#about-modal").modal('show');
+        });
+    $(".about-modal-dismiss").on("click", function(event) {
+        $("#about-modal").modal('hide');
+    });
+
+    var zoom = d3.behavior.zoom();
+
 
     var svg = d3.select("#canvas")
         .append("svg:svg")
-        .attr("class", "graphdiagram");
+        .call(zoom.on("zoom", zoomed))
+        .attr("class", "graphdiagram")
+        .style("cursor", "pointer")
 
+        //.attr('transform', 'translate(' + 0 + ',' + height / 2  + ') scale(1)');
+        //.attr("xmlns", "http://www.w3.org/1999.9/svg")
+        //.attr("pointer-events", "all");
+    
+    //zoom.translate([0, height / 2]).scale(1);
+    
     var diagram = gd.diagram()
         .scaling(gd.scaling.centerOrScaleDiagramToFitSvg)
         .overlay(function(layoutModel, view) {
@@ -26,10 +72,10 @@ window.onload = function()
 
             nodeOverlays.exit().remove();
 
-            nodeOverlays.enter().append("circle")
+                nodeOverlays.enter().append("circle")
                 .attr("class", "node overlay")
                 .call( d3.behavior.drag().on( "drag", drag ).on( "dragend", dragEnd ) )
-                .on( "click", editNode );
+                .on( "click", editNode);
 
             nodeOverlays
                 .attr("r", function(node) {
@@ -138,6 +184,10 @@ window.onload = function()
         draw();
     }
 
+    function zoomed() {
+        svg.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+    }
+
     function dragRing()
     {
         var node = this.__data__.model;
@@ -204,6 +254,10 @@ window.onload = function()
         var editor = d3.select(".nodeeditor");
         editor.classed("hide", false);
 
+        var collapsable = d3.select("#panel");
+        collapsable.classed("collapse", false);
+        collapsable.classed("in", true);
+
         var node = this.__data__.model;
 
         var captionField = editor.select("#sb_node_caption");
@@ -221,9 +275,14 @@ window.onload = function()
         var lineColorField = editor.select("#sb_node_line_color");
         lineColorField.node().value = node.style("border-color");
 
+        var captionColorField = editor.select("#sb_node_caption_color");
+        captionColorField.node().value = node.caption_color();
+
+
         function saveChange()
         {
             node.caption( captionField.node().value );
+            node.caption_color( captionColorField.node().value );
             node.properties().clearAll();
             propertiesField.node().value.split("\n").forEach(function(line) {
                 var tokens = line.split(/: */);
@@ -444,7 +503,8 @@ window.onload = function()
         var colorPickerFieldSelectors = [
             '#sb_node_fill_color',
             '#sb_node_line_color',
-            '#sb_relationship_line_color'
+            '#sb_relationship_line_color',
+            '#sb_node_caption_color'
         ];
         var options = {
             onBeforeShow: function () {
@@ -533,6 +593,25 @@ window.onload = function()
         showModal(".modal.choose-style");
     };
 
+    // simulate the clicking of a the uri for the downloaded file
+    function eventFire(el, etype){
+          if (el.fireEvent) {
+              (el.fireEvent('on' + etype));
+          } else {
+              var evObj = document.createEvent('Events');
+              evObj.initEvent(etype, true, false);
+              el.dispatchEvent(evObj);
+          }
+        }
+        
+    var jsonToFile = function(filename) {
+        var link = document.createElement("a");
+        link.download = filename;
+        var text = "data:application/json," + localStorage.GraphJSON;
+        link.href = text;
+        eventFire(link, "click");
+    };
+
     d3.select("#saveStyle" ).on("click", function() {
         var selectedStyle = d3.selectAll("input[name=styleChoice]" )[0]
             .filter(function(input) { return input.checked; })[0].value;
@@ -553,9 +632,12 @@ window.onload = function()
 
     d3.select(window).on("resize", draw);
     d3.select("#internalScale" ).on("change", changeInternalScale);
-    d3.select( "#exportMarkupButton" ).on( "click", exportMarkup );
+    //d3.select( "#exportMarkupButton" ).on( "click", exportMarkup );
     d3.select( "#exportSvgButton" ).on( "click", exportSvg );
+    d3.select( "#exportGraphJSONButton" ).on( "click", function() {
+        jsonToFile("GraphJSON");});
     d3.select( "#chooseStyleButton" ).on( "click", chooseStyle );
+
     d3.selectAll( ".modal-dialog" ).on( "click", function ()
     {
         d3.event.stopPropagation();

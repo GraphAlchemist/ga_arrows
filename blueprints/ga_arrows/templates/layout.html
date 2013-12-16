@@ -1,5 +1,12 @@
 {% extends "bootstrap/base.html" %}
 
+{% import "bootstrap/google.html" as google %}
+
+{% block scripts %}
+{{super()}}
+{{google.analytics(account="UA-40694647-3")}}
+{% endblock %}
+
 {% block title %}
 Arrows Tool
 {% endblock title %}

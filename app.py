@@ -20,6 +20,14 @@ def hello():
 def tool():
     return render_template('tool.html')
 
+@app.route('/arcs')
+def arcs():
+    return render_template('arcs.html')
+
+@app.route('/arrows')
+def arrows():
+    return render_template('arrows.html')
+
 
 if __name__ == "__main__":
     app.run()

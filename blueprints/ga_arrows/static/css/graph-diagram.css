@@ -5,3 +5,7 @@
 #textMeasuringCanvas {
     display: none;
 }
+
+[point=startAttach] {
+    fill: red;
+}
